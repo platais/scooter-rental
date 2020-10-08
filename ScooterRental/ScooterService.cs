@@ -15,6 +15,13 @@ namespace ScooterRental
         }
         public void AddScooter(string id, decimal pricePerMinute) 
         {
+            if (pricePerMinute < 0)
+                throw new NegativePriceException();
+            if (String.IsNullOrEmpty(id)) //parbaudit vai te bij pareizi
+                throw new ScooterIdNullException();
+            if (_scooters.ContainsKey(id))
+                throw new ScooterIdExistsException();
+
             _scooters.Add(id, new Scooter(id, pricePerMinute));
         }
         public IList<Scooter> GetScooters()
