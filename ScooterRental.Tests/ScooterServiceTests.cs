@@ -18,7 +18,7 @@ namespace ScooterRental.Tests
         }
         [TestMethod]
         public void GetScooterByIdTest()
-        { 
+        {
             _scooterService.AddScooter("1", 0.2m);
             var scooter = _scooterService.GetScooterById("1");
             Assert.AreEqual("1", scooter.Id);
@@ -29,7 +29,7 @@ namespace ScooterRental.Tests
         {
             _scooterService.AddScooter("1", -0.2m);
             Assert.ThrowsException<NegativePriceException>(
-                ()=> _scooterService.AddScooter("1", -0.2m)
+                () => _scooterService.AddScooter("1", -0.2m)
                 );
         }
 
@@ -48,5 +48,48 @@ namespace ScooterRental.Tests
                 () => _scooterService.AddScooter("1", 0.2m)
                 );
         }
+
+        [TestMethod]
+        public void GetScooterByIdNull()
+        {
+            Assert.ThrowsException<ScooterIdNullException>(
+                () => _scooterService.GetScooterById(null)
+                );
+        }
+
+        [TestMethod]
+        public void GetScooterByIdNonExistingTest()
+        {
+            Assert.ThrowsException<ScooterNotExistsException>(
+                () => _scooterService.GetScooterById("Arturs")
+                );
+        }
+
+        [TestMethod]
+        public void RemoveScooterTest()
+        {
+            _scooterService.AddScooter("1", 0.2m);
+            _scooterService.RemoveScooter("1");
+            Assert.ThrowsException<ScooterNotExistsException>(
+                ()=>_scooterService.GetScooterById("1")
+
+                );//jgkvgkifik
+        }
+
+        public void RemoveNonExistingScooterTest()
+        {
+            Assert.ThrowsException<ScooterNotExistsException>(
+                () => _scooterService.RemoveScooter("Roberts")////
+                );
+        }
+
+        public void RemoveScooterNullIdTest()
+            {
+            Assert.ThrowsException<ScooterIdExistsException>(
+                () => _scooterService.RemoveScooter(null)
+                );
+            }
+
+
     }
 }

@@ -17,26 +17,38 @@ namespace ScooterRental
         {
             if (pricePerMinute < 0)
                 throw new NegativePriceException();
-            if (String.IsNullOrEmpty(id)) //parbaudit vai te bij pareizi
-                throw new ScooterIdNullException();
-            if (_scooters.ContainsKey(id))
-                throw new ScooterIdExistsException();
-
-            _scooters.Add(id, new Scooter(id, pricePerMinute));
+            if (ValidateId(id))
+                _scooters.Add(id, new Scooter(id, pricePerMinute));
         }
+
         public IList<Scooter> GetScooters()
         {
-            throw new System.NotImplementedException();
+            return _scooters.Select(s => s.Value).ToList();
+        }
+
+        public Scooter GetScooterById(string id)
+        {
+            if (ValidateId(id))//
+             return  _scooters[id];
+            return null;
         }
 
         public void RemoveScooter(string id)
         {
-            throw new NotImplementedException();
+          if(ValidateId(id))
+            _scooters.Remove(id);
         }
-
-        public Scooter GetScooterById(string scooterId)
+        private bool ValidateId(string id)
         {
-            return _scooters[scooterId];
+            if (String.IsNullOrEmpty(id))
+                throw new ScooterIdNullException();
+            if (_scooters.ContainsKey(id))
+                throw new ScooterNotExistsException();//te kkko
+        }
+        public void GetScootersTest()
+        {
+            _scooterService.AddScooter("1", 0.2m);
+            Assert.AreEqual(1, _scooterService.GetScooters().Count);
         }
     }
 }
