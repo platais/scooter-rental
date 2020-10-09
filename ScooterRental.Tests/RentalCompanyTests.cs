@@ -10,13 +10,14 @@ namespace ScooterRental.Tests
     [TestClass]
     public class RentalCompanyTests
     {
+        private IRentHistoryService _historyService;
         private IRentalCompany _company;
         private IScooterService _scooterService;
         private string _companyName = "Test company";
         public RentalCompanyTests()
         {
             _scooterService = new ScooterService();
-            _company = new RentalCompany(_companyName, _scooterService);
+            _company = new RentalCompany(_companyName, _scooterService, _historyService);
         }
         [TestMethod]
         public void RentalCompanyNameTest()
@@ -26,9 +27,9 @@ namespace ScooterRental.Tests
         [TestMethod]
         public void RentalCompanyNameNullTest()
         {
-            Assert.ThrowsException<RentalCompanyNameNullException>(() => _company = new RentalCompany(null));
+            Assert.ThrowsException<RentalCompanyNameNullException>(() => _company = new RentalCompany(null,_scooterService ,_historyService));
         }
-
+        [TestMethod]
         public void RentalCompanyStartRentTest()
         {
             _scooterService.AddScooter("1", 0.2m);
@@ -49,7 +50,7 @@ namespace ScooterRental.Tests
         public void RentScooterWithoutTestId()
         {
             Assert.ThrowsException<ScooterIdNullException>(
-                ()=>
+                ()=> _company.StartRent(null)
                 );
         }
 
@@ -62,22 +63,22 @@ namespace ScooterRental.Tests
                 () => _company.StartRent("1")
                 );
         }
-
+        [TestMethod]
         public void EndScooterRentTest() 
         {
             _scooterService.AddScooter("1", 0.2m);
             _company.StartRent("1");
             _company.EndRent("1");
             Assert.AreEqual(false,
-                _scooterService.GetScooterById("1").IsRented());
+                _scooterService.GetScooterById("1").IsRented);
         }
-
+        [TestMethod]
         public void EndNotRentedScooterRentTest() 
         {
             _scooterService.AddScooter("1", 0.2m);
-            Assert.ThrowsException<ScooterNoteRentedException>(
-                ()=>...
-                )
+            Assert.ThrowsException<ScooterNotRentedException>(
+                () => _company.EndRent("1")
+                );
         }
     }
 }

@@ -17,6 +17,14 @@ namespace ScooterRental.Tests
             _scooterService.AddScooter("1", 0.2m);
         }
         [TestMethod]
+
+        public void GetScootersTest()
+        {
+            _scooterService.AddScooter("1", 0.2m);
+            Assert.AreEqual(1, _scooterService.GetScooters().Count);
+        }
+
+        [TestMethod]
         public void GetScooterByIdTest()
         {
             _scooterService.AddScooter("1", 0.2m);
@@ -26,8 +34,7 @@ namespace ScooterRental.Tests
         }
         [TestMethod]
         public void AddScooterNegativePriceTest()
-        {
-            _scooterService.AddScooter("1", -0.2m);
+        { 
             Assert.ThrowsException<NegativePriceException>(
                 () => _scooterService.AddScooter("1", -0.2m)
                 );
@@ -37,7 +44,7 @@ namespace ScooterRental.Tests
         public void AddScooterNullTest()
         {
             Assert.ThrowsException<ScooterIdNullException>(
-                () => _scooterService.AddScooter(null, -0.2m)
+                () => _scooterService.AddScooter(null, 0.2m)
                 );
         }
         [TestMethod]
@@ -75,17 +82,17 @@ namespace ScooterRental.Tests
 
                 );//jgkvgkifik
         }
-
+        [TestMethod]
         public void RemoveNonExistingScooterTest()
         {
             Assert.ThrowsException<ScooterNotExistsException>(
                 () => _scooterService.RemoveScooter("Roberts")////
                 );
         }
-
+        [TestMethod]
         public void RemoveScooterNullIdTest()
             {
-            Assert.ThrowsException<ScooterIdExistsException>(
+            Assert.ThrowsException<ScooterIdNullException>(
                 () => _scooterService.RemoveScooter(null)
                 );
             }

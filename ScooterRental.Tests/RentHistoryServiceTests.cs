@@ -17,6 +17,7 @@ namespace ScooterRental.Tests
             _historyService = new RentHistoryService();
         }
 
+        [TestMethod]
         public void AddRecordTest()
         {
             _historyService.AddRent("1", 0.2m, DateTime.Now);
@@ -25,8 +26,8 @@ namespace ScooterRental.Tests
         [TestMethod]
         public void EditRecordTest()
         {
-        _historyService.AddRent("1", 0.2m, DateTime.Now);
-            _historyService.EndRent("1", DateTime.Now)
+            _historyService.AddRent("1", 0.2m, DateTime.Now);
+            _historyService.EndRent("1", DateTime.Now);
 
         }
 

@@ -13,15 +13,21 @@ namespace ScooterRental
         {
             _records = new List<RentedScooter>();
         }
-        public void AddRent(string id, decimal pricePerMinute, DateTime.Now)
+        public void AddRent(string id, decimal pricePerMinute, DateTime startTime)
         {
-            _historyService.AddRent("1", 0.2m, DateTime.Now);
+            _records.Add(
+                new RentedScooter
+                {
+                    StartRent = startTime,
+                    Price = pricePerMinute,
+                    ScooterId = id
+                });
         }
 
         public void EndRent(string id, DateTime endTime)
         {
-            _records.SingleOrDefault(r => r.ScooterId == id && r.EndRent == null);
-            Rent.EndRent ... 
+            var rent = _records.SingleOrDefault(r => r.ScooterId == id && r.EndRent == null);
+            rent.EndRent = endTime;
         }
     }
 }
