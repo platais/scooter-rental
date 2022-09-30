@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScooterRental
 {
@@ -11,7 +7,6 @@ namespace ScooterRental
 
         public ScooterNotExistsException():base("scooter does not exist")
         {
-
         }
     }
 }

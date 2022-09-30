@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScooterRental
 {
@@ -52,6 +50,5 @@ namespace ScooterRental
                 throw new ScooterNotExistsException();//te kkko
             return true;
         }
-
     }
 }
